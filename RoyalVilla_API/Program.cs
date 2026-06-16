@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using RoyalVilla_API.Data;
 using RoyalVilla_API.Models;
-using RoyalVilla_API.Models.DTO;
+using RoyalVilla.DTO;
 using RoyalVilla_API.Services;
 using Scalar.AspNetCore;
 using System.Text;
@@ -83,7 +83,7 @@ builder.Services.AddAutoMapper(o =>
 });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddCors();
 var app = builder.Build();
 await SeedDataAsync(app);
 
@@ -93,7 +93,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*"));
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

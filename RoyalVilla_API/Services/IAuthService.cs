@@ -1,10 +1,10 @@
-﻿using RoyalVilla_API.Models.DTO;
+﻿using RoyalVilla.DTO;
 
 namespace RoyalVilla_API.Services
 {
     public interface IAuthService
     {
-       Task<UserDTO?> RegisterAsync(RegistertaionRequestDTO registertaionRequestDTO);
+       Task<UserDTO?> RegisterAsync(RegisterationRequestDTO registertaionRequestDTO);
 
        Task<LoginResponseDTO?> LoginAsync(LoginRequestDTO loginRequestDTO);
 

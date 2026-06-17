@@ -1,13 +1,16 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RoyalVilla.DTO;
 using RoyalVilla_API.Data;
 using RoyalVilla_API.Models;
-using RoyalVilla.DTO;
 
-namespace RoyalVilla_API.Controllers
+namespace RoyalVilla_API.Controllers.v2
 {
-    [Route("api/villa-amenities")]
+    [Route("api/v{version:apiVersion}/villa-amenities")]
+    //[ApiExplorerSettings(GroupName = "v1")]   
+    [ApiVersion("2.0")]
     [ApiController]
     public class VillaAmentiesController : ControllerBase
     {
@@ -158,7 +161,7 @@ namespace RoyalVilla_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(typeof(ApiResponse<object>),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
@@ -166,14 +169,14 @@ namespace RoyalVilla_API.Controllers
         {
             try
             {
-                if(id<0)
+                if (id < 0)
                 {
                     return BadRequest(ApiResponse<object>.BadRequest("ID is not valid"));
                 }
 
                 var villaAmenities = await _db.villaAmenities.FirstOrDefaultAsync(u => u.Id == id);
 
-                if(villaAmenities == null)
+                if (villaAmenities == null)
                 {
                     return NotFound(ApiResponse<object>.NotFound($"Villa Amenities with ID {id} was not found"));
                 }
